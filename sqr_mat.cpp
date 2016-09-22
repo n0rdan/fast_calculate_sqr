@@ -9,14 +9,15 @@ int main(int argc, char* argv[]) {
 	
 	//------------------init------------------
 	setlocale(LC_ALL, "Russian");
-	float a, b, c, x1, x2, d;
+	float a, b, c, x1, x2, d, z, y, k;
 	x2 = 0;
 	x1 = 0;
 	d = 0;
-	bool is_x1_used, is_x2_used;
+	bool is_x1_used, is_x2_used, is_convert_possible, is_z_sqr;
 	is_x1_used = 0;
 	is_x2_used = 0;
-	
+	is_convert_possible=0;
+	is_z_sqr = 0;
 	if(argc>3) {
 		a=atoi(argv[1]);
 		b=atoi(argv[2]);
@@ -75,9 +76,31 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+	if(a>0&&c>0&&b/2>=sqrt(a)) {
+		is_convert_possible=1;
+		z=sqrt(a);
+		if((int)z!=z) {
+			is_z_sqr = 1;
+			z=a;
+		}
+		y=b*b/(4*c);
+		k=c-y;
+	}
 	
 	//--------------output result--------------
-	cout << endl << endl;
+	if(is_convert_possible) {
+		cout<<"Выражение можно преобразовать в: (";
+		if(is_z_sqr) cout<<"\u221A";
+		cout<<z<<'x';
+		if(y>0) cout<<'+'<<y;
+			else cout<<y;
+		cout<<")\u00B2";
+		if(k!=0)
+			if(k>0) cout<<'+'<<k;
+				else cout<<k;
+		cout<<endl;
+	}
+	cout<<endl;
 	if (is_x1_used) cout << "Результат x1: " << x1<<endl;
 	if(x1!=x2 && is_x2_used) cout << "Результат x2: " << x2<<endl;
 	if (!is_x1_used && !is_x2_used) cout << "Решений нет" << endl;
