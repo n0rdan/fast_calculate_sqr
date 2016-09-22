@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 	//---------output init. equation----------
 	for(int i=0; i<80; i++) cout<<'#';
 	cout << "Уравнение: ";
-	if(a==1)cout<< "x\u00B2";
+	if(a==1) cout<< "x\u00B2";
 		else if(a==-1) cout<< "-x\u00B2";
 			else cout<<a<<"x"<< "\u00B2";
 
@@ -51,8 +51,7 @@ int main(int argc, char* argv[]) {
 		cout << "Корней бесконечно много!" << endl;	
 		for(int i=0; i<80; i++) cout<<'#';
 		return 0;
-	}
-	if (a || b ) {
+	} else if (a || b ) {
 		if (!a&&b) {
 			x1 = -c / b;
 			is_x1_used = 1;
