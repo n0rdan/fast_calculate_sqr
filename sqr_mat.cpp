@@ -23,37 +23,19 @@ int main(int argc, char* argv[]) {
 		b=atoi(argv[2]);
 		c=atoi(argv[3]);
 	} else {
-	cout << "Добро пожаловать в программу для решение квадратных уравнений." << endl << "Введите первый коэфицент: ";
+	cout << "Добро пожаловать в программу для решения квадратных уравнений." << endl;
+	cout<< "Введите первый коэффициент: ";
 	cin >> a;
-	cout << "Введите второй коэфицент: ";
+	cout << "Введите второй коэффициент: ";
 	cin >> b;
-	cout << "Введите третий коэфицент: ";
+	cout << "Введите третий коэффициент: ";
 	cin >> c;
 	}
 	//----------------end_init----------------
 	
-	//---------output init. equation----------
-	for(int i=0; i<80; i++) cout<<'#';
-	cout << "Уравнение: ";
-	if(a==1) cout<< "x\u00B2";
-		else if(a==-1) cout<< "-x\u00B2";
-			else cout<<a<<"x"<< "\u00B2";
-
-	if(b>0) cout<<'+' << b;
-		else cout<<b;
-	cout << "x";
-	if(c>0) cout<<'+' << c;
-		else cout<<c;
-	cout << "=0" << endl;
-	//---------------end output---------------
-	
 	//---------main part, calculating---------
-	if (!a && !b&&!c) {
-		cout << "Корней бесконечно много!" << endl;	
-		for(int i=0; i<80; i++) cout<<'#';
-		return 0;
-	} else if (a || b ) {
-		if (!a&&b) {
+	if (a || b ) {
+		if (!a && b) {
 			x1 = -c / b;
 			is_x1_used = 1;
 		} else if (!b && (-c / a>0)) {
@@ -68,7 +50,10 @@ int main(int argc, char* argv[]) {
 			is_x2_used = 1;
 		} else {
 			d=b*b - 4 * a*c;
-			if(d>=0){
+			if(d == 0){
+				x1 = (-b + sqrt(d)) / 2 * a;
+				is_x1_used = 1;
+			} else if(d > 0){
 				x1 = (-b + sqrt(d)) / 2 * a;
 				x2 = (-b - sqrt(d)) / 2 * a;
 				is_x1_used = 1;
@@ -76,7 +61,7 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-	if(a>0&&c>0&&b/2>=sqrt(a)) {
+	if(a>0 && c>0 && b/2>=sqrt(a)) {
 		is_convert_possible=1;
 		z=sqrt(a);
 		if((int)z!=z) {
@@ -87,13 +72,40 @@ int main(int argc, char* argv[]) {
 		k=c-y;
 	}
 	
+	//---------output init. equation----------
+	for(int i=0; i<80; i++) cout<<'#';
+	cout << "Уравнение: ";
+	if(a!=0) 
+		if(a==1) cout<< "x\u00B2";
+			else if(a==-1) cout<< "-x\u00B2";
+				else cout<<a<<"x"<< "\u00B2";
+	if(b!=0) {
+		if(b==-1) cout<<'-';
+		if(a!=0) 
+			if(b>0) cout<<'+';
+		if(b!=1&&b!=-1)
+			if(b>0&&a!=0) cout<< b;
+				else cout<<b;
+		cout << "x";
+	}
+	if(c!=0)
+		if((a!=0||b!=0)&&c>0) cout<<'+' << c;
+			else cout<<c;
+		else if(a==0&&b==0) cout<<c;
+
+	cout << "=0" << endl;
+	
 	//--------------output result--------------
 	if(is_convert_possible) {
 		cout<<"Выражение можно преобразовать в: (";
-		if(is_z_sqr) cout<<"\u221A";
-		cout<<z<<'x';
-		if(y>0) cout<<'+'<<y;
-			else cout<<y;
+		if(z!=1) {
+			if(is_z_sqr) cout<<"\u221A";
+			cout<<z;
+		}
+		cout<<'x';
+		if(y!=0) 
+			if(y>0) cout<<'+'<<y;
+				else cout<<y;
 		cout<<")\u00B2";
 		if(k!=0)
 			if(k>0) cout<<'+'<<k;
@@ -101,10 +113,12 @@ int main(int argc, char* argv[]) {
 		cout<<endl;
 	}
 	cout<<endl;
-	if (is_x1_used) cout << "Результат x1: " << x1<<endl;
-	if(x1!=x2 && is_x2_used) cout << "Результат x2: " << x2<<endl;
-	if (!is_x1_used && !is_x2_used) cout << "Решений нет" << endl;
+	if (!a && !b&&!c) cout << endl << "Корней бесконечно много!" << endl;
+		else {
+			if (is_x1_used) cout << "Результат x1: " << x1<<endl;
+			if(x1!=x2 && is_x2_used) cout << "Результат x2: " << x2<<endl;
+			if (!is_x1_used && !is_x2_used) cout << "Решений нет" << endl;
+		}
 	for(int i=0; i<80; i++) cout<<'#';
-    	
 	return 0;
 }
